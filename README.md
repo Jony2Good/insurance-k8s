@@ -24,7 +24,14 @@ helm repo update
 ```
 
 ```
-helm install prometheus prometheus-community/kube-prometheus-stack --namespace k8s-basics --create-namespace
+helm install prometheus prometheus-community/prometheus --namespace k8s-basics --create-namespace -f prometheus-values.yaml
+```
+
+*Пробрасываем порт наружу*
+
+```
+kubectl -n k8s-basics get svc
+kubectl -n k8s-basics port-forward svc/prometheus-server
 ```
 
 
