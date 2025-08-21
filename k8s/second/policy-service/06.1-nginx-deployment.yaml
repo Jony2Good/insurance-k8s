@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: policy-service-nginx-deploy
+  namespace: k8s-basics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: policy-service-nginx-deploy
+  template:
+    metadata:
+      labels:
+        app: policy-service-nginx-deploy
+    spec:
+      containers:
+        - name: nginx
+          image: atrem2023/app-nginx:amd64
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: policy-service-nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/ready
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: policy-service-nginx-config
+          configMap:
+            name: policy-service-nginx-config

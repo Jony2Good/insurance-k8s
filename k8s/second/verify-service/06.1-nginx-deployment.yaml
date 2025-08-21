@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: verify-service-nginx-deploy
+  namespace: k8s-basics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: verify-service-nginx-deploy
+  template:
+    metadata:
+      labels:
+        app: verify-service-nginx-deploy
+    spec:
+      containers:
+        - name: nginx
+          image: atrem2023/app-nginx:amd64
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: verify-service-nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf          
+      volumes:
+        - name: verify-service-nginx-config
+          configMap:
+            name: verify-service-nginx-config

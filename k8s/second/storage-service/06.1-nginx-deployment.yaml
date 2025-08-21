@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storage-service-nginx-deploy
+  namespace: k8s-basics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: storage-service-nginx-deploy
+  template:
+    metadata:
+      labels:
+        app: storage-service-nginx-deploy
+    spec:
+      containers:
+        - name: nginx
+          image: atrem2023/app-nginx:amd64
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: storage-service-nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf          
+      volumes:
+        - name: storage-service-nginx-config
+          configMap:
+            name: storage-service-nginx-config

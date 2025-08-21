@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storage-billing-event
+  namespace: k8s-basics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: storage-billing-event
+  template:
+    metadata:
+      labels:
+        app: storage-billing-event
+    spec:
+      initContainers:
+        - name: wait-for-php
+          image: alpine:3.18
+          command: ['sh', '-c', 'apk add --no-cache netcat-openbsd && until nc -z storage-php-service 9000; do echo "Waiting for storage-php-service..."; sleep 2; done;']
+      containers:
+        - name: storage-billing-event
+          image: atrem2023/storage-service-v2:amd64
+          command: ["php", "artisan", "app:storage-event"]      
+          env:
+          - name: RABBITMQ_HOST
+            value: "rabbitmq"
+          - name: RABBITMQ_PORT
+            value: "5672"
