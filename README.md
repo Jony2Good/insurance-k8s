@@ -31,7 +31,7 @@ helm install prometheus prometheus-community/prometheus --namespace k8s-basics -
 
 ```
 kubectl -n k8s-basics get svc
-kubectl -n k8s-basics port-forward svc/prometheus-server
+kubectl -n k8s-basics port-forward <имя пода> 9090:9090
 ```
 
 
