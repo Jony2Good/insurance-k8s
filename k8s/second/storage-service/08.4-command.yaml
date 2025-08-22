@@ -20,7 +20,7 @@ spec:
       containers:
         - name: storage-billing-event
           image: atrem2023/storage-service-v2:amd64
-          command: ["php", "artisan", "app:storage-event"]      
+          command: ["php", "artisan", "app:billing-event"]      
           env:
           - name: RABBITMQ_HOST
             value: "rabbitmq"

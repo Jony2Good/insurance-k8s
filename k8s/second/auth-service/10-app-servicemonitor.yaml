@@ -1,18 +1,18 @@
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+apiVersion: v1
+kind: Service
 metadata:
-  name: laravel-service-monitor
+  name: laravel-service
   namespace: k8s-basics
   labels:
-    release: prometheus
+    app: laravel-nginx
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "80"        # порт твоего контейнера (или сервиса)
+    prometheus.io/path: "/metrics"  # маршрут Laravel
 spec:
   selector:
-    matchLabels:
-      app: laravel-nginx  
-  namespaceSelector:
-    matchNames:
-      - k8s-basics
-  endpoints:
-    - port: http
-      path: /metrics
-      interval: 15s
+    app: laravel-nginx
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
