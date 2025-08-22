@@ -31,8 +31,18 @@ helm install prometheus prometheus-community/prometheus --namespace k8s-basics -
 
 ```
 kubectl -n k8s-basics get svc
-kubectl -n k8s-basics port-forward svc/prometheus-server
+kubectl -n k8s-basics port-forward <имя пода> 9090:9090
 ```
+
+**Установка Grafana**
+
+```
+kubectl run grafana --image=grafana/grafana:latest -n k8s-basics --port=3000
+kubectl expose pod grafana --type=ClusterIP --port=3000 -n k8s-basics
+kubectl -n k8s-basics port-forward svc/grafana 3000:3000
+```
+
+В Grafana создаем новое соединение, прописывая url http://prometheus-server.k8s-basics.svc.cluster.local. Затем нажимаем кнопку Save & Test
 
 
 ### Первый этап - устанавливаем namespace, запускаем API Gateway
