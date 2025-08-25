@@ -42,8 +42,11 @@ kubectl expose pod grafana --type=ClusterIP --port=3000 -n k8s-basics
 kubectl -n k8s-basics port-forward svc/grafana 3000:3000
 ```
 
-В Grafana создаем новое соединение, прописывая url http://prometheus-server.k8s-basics.svc.cluster.local. Затем нажимаем кнопку Save & Test
+В Grafana создаем новое соединение, прописывая url (после нажимаем кнопку Save & Test в интерфейсе grafana) 
 
+```
+http://prometheus-server.k8s-basics.svc.cluster.local
+```
 
 ### Первый этап - устанавливаем namespace, запускаем API Gateway
 
