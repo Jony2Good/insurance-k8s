@@ -11,7 +11,7 @@ spec:
     - host: arch.homework
       http:
         paths:
-          - path: /otusapp/aemelyanenko(/|$)(.*)
+          - path: /app/insurance(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
