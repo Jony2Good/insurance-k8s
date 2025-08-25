@@ -24,7 +24,7 @@ helm repo update
 ```
 
 ```
-helm install prometheus prometheus-community/prometheus --namespace k8s-basics --create-namespace -f prometheus-values.yaml
+helm install prometheus prometheus-community/prometheus --namespace k8s-basics --create-namespace -f k8s/prometheus-values.yaml
 ```
 
 *Пробрасываем порт наружу*
@@ -141,3 +141,4 @@ kubectl apply -f k8s/second/storage-service/
 ```
 kubectl apply -f k8s/second/verify-service/
 ```
+После того, как будут подняты все сервсиы в minikube необходимо клонировать фронтенд и запусть приложение в докер контейнере. Инструкция развертывания находится в репозитории проекта.
